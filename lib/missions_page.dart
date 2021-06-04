@@ -18,16 +18,15 @@ class MissionsPage extends StatelessWidget {
     return Stack(
       children: [
         BlocBuilder<MissionsCubit, List<Mission>>(
-          builder: (context, missions) => Expanded(
-            child: ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: missions.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 50,
-                    child: Center(child: Text(missions[index].missionName)),
-                  );
-                }),
+          builder: (context, missions) => ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: missions.length,
+            itemBuilder: (BuildContext context, int index) => Card(
+              child: ListTile(
+                title: Text(missions[index].missionName),
+                subtitle: Text(missions[index].details),
+              ),
+            ),
           ),
         ),
         Align(
@@ -40,7 +39,6 @@ class MissionsPage extends StatelessWidget {
               rtl: true,
               textController: searchInputController,
               onSuffixTap: () {
-                print("hui");
                 searchInputController.clear();
                 context.read<MissionsCubit>().search("");
               },
